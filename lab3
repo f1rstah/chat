@@ -1,0 +1,91 @@
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+class Book {
+private:
+	char* Name;
+	char* Author;
+	int Price;
+	int Year;
+
+public:
+	Book() {
+		Name = nullptr;
+		Author = nullptr;
+		Price = 0;
+		Year = 0;
+	}
+
+	Book(const char* mName, const char* mAuthor, int 
+		mPrice, int mYear) {
+			Name = new char[strlen(mName) + 1];
+			strcpy(Name, mName);
+			Author = new char[strlen(mAuthor) + 1];
+			strcpy(Author, mAuthor);
+			Price = mPrice;
+			Year = mYear;
+	}
+
+	~Book() {
+		if (Name != nullptr) {
+			delete[] Name;
+			Name = nullptr;
+		}
+		if (Author != nullptr) {
+			delete[] Author;
+			Author = nullptr;
+		}
+		Price = 0;
+		Year = 0;
+	}
+
+	void Input() {
+		int size = 100;
+		Name = new char[size];
+		Author = new char[size];
+		cout << "Write book name: ";
+	    cin.getline(Name, size);
+		cout << "Write book author: ";
+	    cin.getline(Author, size);
+		cout << "Write book price: ";
+	    cin >> Price;
+		cout << "Write year of publish: ";
+	    cin >> Year;
+	}
+
+	void Output() {
+		cout << "Book: " << Name << " Author : " << Author << " Price : " << Price << " Year : " << Year << " ";
+	}
+};
+
+int main() {
+
+	Book* book1 = new Book;
+	Book* book2 = new Book("Voina i mir", "Tolstoi", 2500, 2000);
+
+	const int count = 2;
+	Book* books[count];
+
+	for (int i = 0; i < count; i++) {
+		cout << "Write info about book:  \n" << (i + 1) << ":";
+		books[i] = new Book;
+		cin.ignore();
+		books[i]->Input();
+	}
+
+	for (int i = 0; i < count; i++) {
+		cout << "Info about book  \n" << (i + 1) << ":";
+		books[i]->Output();
+		cout << endl;
+	}
+
+	delete book1;
+	delete book2;
+	for (int i = 0; i < count; i++) {
+		delete books[i];
+	}
+
+	system("pause");
+}
